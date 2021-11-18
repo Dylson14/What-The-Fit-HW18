@@ -1,5 +1,6 @@
+const db = require("../models");
 const router = require("express").Router();
-const Transaction = require("../models/Workout.js");
+
 
 // so we need to create a post request to create new exercises within an existing workout plan. The question is: Is there an existing workout plan
 // or do I need to create one?
@@ -41,4 +42,31 @@ router.put("/api/workouts/:id", (req, res) => {
 });
 
 // Now is the moment to create a new workout
-router.post("api/workouts", ({body}))
+router.post("/api/workouts", ({ body }, res) => {
+    // console.log("WORKOUT TO BE ADDED");
+    // console.log(body);
+// so the body is the workout in this case.
+    db.Workout.create(body).then((dbWorkout => {
+        res.json(dbWorkout);
+    })).catch(err => {
+        res.json(err);
+    });
+});
+
+// get workouts in range
+// when we reply we need to reply the data in a readable form, hence we return the data as a JSON.
+router.get("/api/workouts/range", (req, res) => {
+
+    db.Workout.find({}).then(dbWorkout => {
+        console.log("ALL WORKOUTS");
+        console.log(dbWorkout);
+
+        res.json(dbWorkout);
+    }).catch(err => {
+        res.json(err);
+    });
+
+});
+
+
+module.exports = router;

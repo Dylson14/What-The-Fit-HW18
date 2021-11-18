@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-// what does the bottom bit of code do?
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
   useFindAndModify: false
